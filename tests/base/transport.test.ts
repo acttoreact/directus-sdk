@@ -106,11 +106,11 @@ describe('default transport', function () {
 		expect(transport.url).toBe(URL);
 	});
 
-	it('non axios errors are set in parent', async function () {
+	it('non fetch errors are set in parent', async function () {
 		const transport = new Transport({ url: URL });
 		const mock = jest.spyOn(transport, 'beforeRequest');
 		mock.mockImplementation(() => {
-			throw new Error('this is not an axios error');
+			throw new Error('this is not a fetch error');
 		});
 
 		try {
@@ -120,9 +120,9 @@ describe('default transport', function () {
 			const terr = err as TransportError;
 			expect(terr).toBeInstanceOf(TransportError);
 			expect(terr.response).toBeUndefined();
-			expect(terr.message).toBe('this is not an axios error');
+			expect(terr.message).toBe('this is not a fetch error');
 			expect(terr.parent).not.toBeUndefined();
-			expect(terr.parent?.message).toBe('this is not an axios error');
+			expect(terr.parent?.message).toBe('this is not a fetch error');
 		}
 	});
 });

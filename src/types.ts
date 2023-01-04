@@ -10,6 +10,20 @@ export type TypeMap = {
 	[k: string]: unknown;
 };
 
+export type TransportMethods = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'UPDATE' | 'DELETE' | 'HEAD' | 'OPTIONS';
+
+export type ResponseType = 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
+
+export type RequestConfig = {
+	url: string;
+	method: TransportMethods;
+	params?: Record<string, string>;
+	headers?: Record<string, string>;
+	body?: string;
+	responseType?: ResponseType;
+	onUploadProgress?: ((progressEvent: any) => void) | undefined;
+};
+
 export type TypeOf<T extends TypeMap, K extends keyof T> = T[K] extends undefined ? DefaultType : T[K];
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

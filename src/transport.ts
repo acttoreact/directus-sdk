@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, ResponseType } from 'axios';
+import type { ResponseType, RequestConfig } from './types';
 import { ItemMetadata } from './items';
 
 export type TransportErrorDescription = {
@@ -18,8 +18,6 @@ export type TransportResponse<T, R = any> = {
 	headers: any;
 };
 
-export type TransportMethods = 'get' | 'delete' | 'head' | 'options' | 'post' | 'put' | 'patch';
-
 export type TransportRequestOptions = {
 	params?: any;
 	headers?: any;
@@ -31,7 +29,7 @@ export type TransportRequestOptions = {
 
 export type TransportOptions = TransportRequestOptions & {
 	url: string;
-	beforeRequest?: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>;
+	beforeRequest?: (config: RequestConfig) => Promise<RequestConfig>;
 };
 
 export abstract class ITransport {

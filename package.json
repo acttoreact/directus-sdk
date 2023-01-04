@@ -46,7 +46,7 @@
 	"author": "Rijk van Zanten <rijkvanzanten@me.com>",
 	"license": "MIT",
 	"dependencies": {
-		"axios": "^0.27.2"
+		"cross-fetch": "^3.1.5"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "22.0.2",
