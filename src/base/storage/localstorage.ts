@@ -15,11 +15,8 @@ export class LocalStorage extends BaseStorage {
 	}
 
 	delete(key: string): string | null {
-		const k = this.key(key);
-		const value = this.get(k);
-		if (value) {
-			localStorage.removeItem(k);
-		}
+		const value = this.get(key);
+		localStorage.removeItem(this.key(key));
 		return value;
 	}
 

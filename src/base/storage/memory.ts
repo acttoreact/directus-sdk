@@ -17,11 +17,8 @@ export class MemoryStorage extends BaseStorage {
 	}
 
 	delete(key: string): string | null {
-		const k = this.key(key);
 		const value = this.get(key);
-		if (k in this.values) {
-			delete this.values[k];
-		}
+		delete this.values[this.key(key)];
 		return value;
 	}
 
