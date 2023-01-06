@@ -4,14 +4,21 @@
 
 import nock from 'nock';
 
+import fetchMock, { enableFetchMocks } from 'jest-fetch-mock';
+enableFetchMocks();
+
 import { Transport } from '../../src/base/transport';
 import { TransportResponse, TransportError } from '../../src/transport';
 
 describe('default transport', function () {
+	beforeEach(() => {
+		fetchMock.doMock();
+	});
+
 	const URL = 'http://localhost';
 	nock.disableNetConnect();
 
-	function expectResponse<T>(response: TransportResponse<T>, expected: Partial<TransportResponse<T>>) {
+	function expectResponse<T extends any[]>(response: TransportResponse<T>, expected: Partial<TransportResponse<T>>) {
 		if (expected.status) {
 			expect(response.status).toBe(expected.status);
 		}
@@ -28,6 +35,7 @@ describe('default transport', function () {
 
 	['get', 'delete', 'head', 'options', 'put', 'post', 'patch'].forEach((method) => {
 		it(`${method} should return a response object`, async () => {
+			//fetchMock.mockResponseOnce(JSON.stringify({ data: '12345' }));
 			const route = `/${method}/response`;
 			(nock(URL) as any)[method](route).reply(200);
 

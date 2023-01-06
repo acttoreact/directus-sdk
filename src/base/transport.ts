@@ -2,7 +2,6 @@ import { ITransport, TransportResponse, TransportError, TransportOptions } from 
 
 import type { TransportMethods, RequestConfig } from '../types';
 
-//import 'cross-fetch/polyfill';
 import type { Fetch } from './fetch';
 import { fetchWrapper } from './fetch';
 
@@ -39,7 +38,7 @@ export class Transport extends ITransport {
 		try {
 			let config: RequestConfig = {
 				method,
-				url: path,
+				url: this.config.url + path,
 				headers: options?.headers,
 				params: options?.params,
 				responseType: options?.responseType,
@@ -60,17 +59,19 @@ export class Transport extends ITransport {
 				headers: config.headers,
 			});
 
+			const result = await response.json();
+
 			const content = {
-				raw: response.data as any,
-				status: response.status,
-				statusText: response.statusText,
-				headers: response.headers,
-				data: response.data.data,
-				meta: response.data.meta,
-				errors: response.data.errors,
+				raw: result as any,
+				status: result.status,
+				statusText: result.statusText,
+				headers: result.headers,
+				data: result.data,
+				meta: result.data.meta,
+				errors: result.data.errors,
 			};
 
-			if (response.data.errors) {
+			if (result.data.errors) {
 				throw new TransportError<T, R>(null, content);
 			}
 
