@@ -35,7 +35,7 @@ describe('default transport', function () {
 
 	['get', 'delete', 'head', 'options', 'put', 'post', 'patch'].forEach((method) => {
 		it(`${method} should return a response object`, async () => {
-			//fetchMock.mockResponseOnce(JSON.stringify({ data: '12345' }));
+			//fetchMock.mockResponse(JSON.stringify({ data: { record: '12345' } }));
 			const route = `/${method}/response`;
 			(nock(URL) as any)[method](route).reply(200);
 

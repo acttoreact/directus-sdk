@@ -1,9 +1,26 @@
 import { ITransport, TransportResponse, TransportError, TransportOptions } from '../transport';
-
 import type { TransportMethods, RequestConfig } from '../types';
 
 import type { Fetch } from './fetch';
 import { fetchWrapper } from './fetch';
+
+function serializeSearchParams(obj: any, prefix = ''): string {
+	const str = [];
+	let p;
+	for (p in obj) {
+		// eslint-disable-next-line no-prototype-builtins
+		if (obj.hasOwnProperty(p)) {
+			const k = prefix ? prefix + '[' + p + ']' : p;
+			const v = obj[p];
+			str.push(
+				v !== null && typeof v === 'object'
+					? serializeSearchParams(v, k)
+					: encodeURIComponent(k) + '=' + encodeURIComponent(v)
+			);
+		}
+	}
+	return str.join('&');
+}
 
 /**
  * Transport implementation
@@ -46,7 +63,7 @@ export class Transport extends ITransport {
 			};
 
 			if (config.params) {
-				config.url += '?' + new URLSearchParams(config.params).toString();
+				config.url += '?' + serializeSearchParams(config.params);
 			}
 			if (data) {
 				config.body = JSON.stringify(data);
@@ -55,7 +72,7 @@ export class Transport extends ITransport {
 			config = await this.beforeRequest(config);
 
 			const response: any = await this.fetch(config.url, {
-				method: config.method,
+				method: config.method.toUpperCase(),
 				headers: config.headers,
 			});
 
@@ -67,8 +84,8 @@ export class Transport extends ITransport {
 				statusText: result.statusText,
 				headers: result.headers,
 				data: result.data,
-				meta: result.data.meta,
-				errors: result.data.errors,
+				meta: result.data.meta || {},
+				errors: result.data.errors || {},
 			};
 
 			if (result.data.errors) {
