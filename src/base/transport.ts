@@ -88,9 +88,6 @@ export class Transport extends ITransport {
 
 			const result = await response.json();
 
-			// eslint-disable-next-line no-console
-			console.log('-----> ', result);
-
 			const content = {
 				raw: result as any,
 				status: result.status,
