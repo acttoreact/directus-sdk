@@ -73,10 +73,23 @@ export class Transport extends ITransport {
 
 			const response: any = await this.fetch(config.url, {
 				method: config.method.toUpperCase(),
-				headers: config.headers,
+				headers: {
+					'Content-Type': 'application/json',
+					...config.headers,
+				},
+				body: JSON.stringify(data),
 			});
 
+			if (!response.ok) {
+				// eslint-disable-next-line no-console
+				console.error('ERROR >>> ', response.statusText);
+				throw new Error(`An error occured please try again`);
+			}
+
 			const result = await response.json();
+
+			// eslint-disable-next-line no-console
+			console.log('-----> ', result);
 
 			const content = {
 				raw: result as any,
