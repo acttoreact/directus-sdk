@@ -22,14 +22,12 @@ import { ITransport, TransportOptions } from '../transport';
 import { ItemsHandler } from './items';
 import { Transport } from './transport';
 import { Auth } from './auth';
-import { IStorage } from '../storage';
-import { LocalStorage, MemoryStorage, StorageOptions } from './storage';
-import { TypeMap, TypeOf, PartialBy } from '../types';
+import { IStorage } from '../../storage/storage';
+import { DirectusStorageOptions, LocalStorage, MemoryStorage } from '../../storage/';
+import { TypeMap, TypeOf, PartialBy } from '../../types';
 import { GraphQLHandler } from '../handlers/graphql';
 import { ISingleton } from '../singleton';
 import { SingletonHandler } from '../handlers/singleton';
-
-export type DirectusStorageOptions = StorageOptions & { mode?: 'LocalStorage' | 'MemoryStorage' };
 
 export type DirectusOptions<IAuthHandler extends IAuth = Auth> = {
 	auth?: IAuthHandler | PartialBy<AuthOptions, 'transport' | 'storage'>;

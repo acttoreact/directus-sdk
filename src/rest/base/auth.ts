@@ -1,6 +1,6 @@
 import { IAuth, AuthCredentials, AuthResult, AuthToken, AuthOptions, AuthTokenType } from '../auth';
 import { PasswordsHandler } from '../handlers/passwords';
-import { IStorage } from '../storage';
+import { IStorage } from '../../storage/storage';
 import { ITransport } from '../transport';
 
 export type AuthStorage<T extends AuthTokenType = 'DynamicToken'> = {

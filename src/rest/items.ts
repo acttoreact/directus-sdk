@@ -1,5 +1,5 @@
 import { TransportRequestOptions } from './transport';
-import { ID, OptionalKeys, RequiredKeys } from './types';
+import { ID, OptionalKeys, RequiredKeys } from '../types';
 
 export type Field = string;
 

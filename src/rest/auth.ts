@@ -1,4 +1,4 @@
-import { IStorage } from './storage';
+import { IStorage } from '../storage/storage';
 import { ITransport } from './transport';
 import { PasswordsHandler } from './handlers/passwords';
 

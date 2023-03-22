@@ -1,4 +1,4 @@
-import { IAuth } from './auth';
+import { IAuth, IWebSocketAuth } from './auth';
 import {
 	ActivityHandler,
 	AssetsHandler,
@@ -17,12 +17,12 @@ import {
 } from './handlers';
 
 import { IItems } from './items';
-import { ITransport } from './transport';
 import { UtilsHandler } from './handlers/utils';
-import { IStorage } from './storage';
-import { TypeMap, TypeOf } from './types';
+import { TypeMap, TypeOf } from '../types';
 import { GraphQLHandler } from './handlers/graphql';
 import { ISingleton } from './singleton';
+import { IStorage } from '../storage';
+import { IWebSocketTransport } from './transport';
 
 export type DirectusTypes = {
 	activity: undefined;
@@ -42,15 +42,15 @@ export type DirectusTypes = {
 
 export interface IDirectusBase {
 	readonly url: string;
-	readonly auth: IAuth;
+	readonly auth: IWebSocketAuth;
 	readonly storage: IStorage;
-	readonly transport: ITransport;
+	readonly transport: IWebSocketTransport;
 	readonly server: ServerHandler;
 	readonly utils: UtilsHandler;
 	readonly graphql: GraphQLHandler;
 }
 
-export interface IDirectus<T extends TypeMap> extends IDirectusBase {
+export interface IDirectusWebSocket<T extends TypeMap> extends IDirectusBase {
 	readonly activity: ActivityHandler<TypeOf<T, 'directus_activity'>>;
 	readonly assets: AssetsHandler;
 	readonly collections: CollectionsHandler<TypeOf<T, 'directus_collections'>>;
@@ -67,4 +67,6 @@ export interface IDirectus<T extends TypeMap> extends IDirectusBase {
 
 	items<C extends string, I = TypeOf<T, C>>(collection: C): IItems<I>;
 	singleton<C extends string, I = TypeOf<T, C>>(collection: C): ISingleton<I>;
+
+	subscribe<C extends string, I = TypeOf<T, C>>(collection: C, callback: (items: IItems<I>) => void): () => void;
 }

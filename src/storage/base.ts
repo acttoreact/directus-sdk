@@ -1,14 +1,18 @@
-import { IStorage } from '../../storage';
+import { IStorage } from './storage';
 
 export type StorageOptions = {
 	prefix?: string;
 };
+
+export type DirectusStorageOptions = StorageOptions & { mode?: 'LocalStorage' | 'MemoryStorage' };
 
 enum Keys {
 	AuthToken = 'auth_token',
 	RefreshToken = 'auth_refresh_token',
 	Expires = 'auth_expires',
 	ExpiresAt = 'auth_expires_at',
+	WSAuthToken = 'ws_auth_token',
+	WSRefreshToken = 'ws_auth_refresh_token',
 }
 
 export abstract class BaseStorage extends IStorage {
@@ -67,6 +71,30 @@ export abstract class BaseStorage extends IStorage {
 			this.delete(Keys.RefreshToken);
 		} else {
 			this.set(Keys.RefreshToken, value);
+		}
+	}
+
+	get ws_auth_token(): string | null {
+		return this.get(Keys.WSAuthToken);
+	}
+
+	set ws_auth_token(value: string | null) {
+		if (value === null) {
+			this.delete(Keys.WSAuthToken);
+		} else {
+			this.set(Keys.WSAuthToken, value);
+		}
+	}
+
+	get ws_auth_refresh_token(): string | null {
+		return this.get(Keys.WSRefreshToken);
+	}
+
+	set ws_auth_refresh_token(value: string | null) {
+		if (value === null) {
+			this.delete(Keys.WSRefreshToken);
+		} else {
+			this.set(Keys.WSRefreshToken, value);
 		}
 	}
 
