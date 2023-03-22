@@ -2,12 +2,11 @@
  * Activity handler
  */
 
+import { ActivityItem } from '../../types';
+import { DefaultType } from '../../types';
 import { ItemsHandler } from '../base/items';
 import { ITransport } from '../transport';
-import { ActivityType, DefaultType } from '../types';
 import { CommentsHandler } from './comments';
-
-export type ActivityItem<T = DefaultType> = ActivityType & T;
 
 export class ActivityHandler<T = DefaultType> extends ItemsHandler<ActivityItem<T>> {
 	private _comments: CommentsHandler<T>;

@@ -1,10 +1,8 @@
-import { AuthCredentials, AuthResult, IWebSocketAuth, WebSocketAuthOptions } from '../auth';
+import { IWebSocketAuth, WebSocketAuthCredentials, WebSocketAuthOptions } from '../auth';
 import { IStorage } from '../../storage';
 import { IWebSocketTransport } from '../transport';
-import { PasswordsHandler } from '../handlers/passwords';
 
 export class WebSocketAuth extends IWebSocketAuth {
-	password: PasswordsHandler;
 	autoRefresh = true;
 	staticToken = '';
 
@@ -24,28 +22,28 @@ export class WebSocketAuth extends IWebSocketAuth {
 			this._storage.auth_token = this.staticToken;
 		}
 
-		this.password = new PasswordsHandler(this._transport);
-
 		this._transport.onMessage(async (data) => {
-			if (data.type === 'auth') {
-				if (data.status === 'ok') {
-					this._storage.ws_auth_refresh_token = data.refresh_token ?? null;
-				} else if(data.status === 'error' && data.error.code === 'TOKEN_EXPIRED') {
-					const response = await this._transport.request<AuthResult>({
-						type: 'auth',
-						refresh_token: this._storage.ws_auth_refresh_token,
-					})
+			if (data.type !== 'auth') return;
 
-					if (response) {
-						this._storage.ws_auth_refresh_token = response.refresh_token ?? null;
-					} else {
-						this.resetStorage()
-					}
-				} else {
-					this.resetStorage()
+			if (
+				data.status === 'error' &&
+				data.error.code === 'TOKEN_EXPIRED' &&
+				this.autoRefresh &&
+				this._storage.ws_auth_refresh_token
+			) {
+				const response = await this._transport.request({
+					type: 'auth',
+					refresh_token: this._storage.ws_auth_refresh_token,
+				});
+
+				if (response && response.status === 'ok') {
+					this._storage.ws_auth_refresh_token = response.refresh_token ?? null;
+					return;
 				}
 			}
-		})
+
+			this.resetStorage();
+		});
 	}
 
 	get storage(): IStorage {
@@ -64,17 +62,17 @@ export class WebSocketAuth extends IWebSocketAuth {
 		this._storage.ws_auth_refresh_token = null;
 	}
 
-	async login(credentials: AuthCredentials) {
+	async login(credentials: WebSocketAuthCredentials) {
 		this.resetStorage();
 
-		const response = await this._transport.request<AuthResult>({
-            type: 'auth',
-            ...credentials,
-        });
+		const response = await this._transport.request({
+			type: 'auth',
+			...credentials,
+		});
 
-		this._storage.auth_refresh_token = response.refresh_token ?? null;
+		this._storage.auth_refresh_token = response.status === 'ok' ? response.refresh_token : null;
 
-		return response
+		return response;
 	}
 
 	async static(token: string): Promise<boolean> {
@@ -82,7 +80,7 @@ export class WebSocketAuth extends IWebSocketAuth {
 
 		await this._transport.request({
 			type: 'auth',
-            access_token: token,
+			access_token: token,
 		});
 
 		this._storage.auth_token = token;

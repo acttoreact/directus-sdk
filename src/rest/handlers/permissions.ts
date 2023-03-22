@@ -4,9 +4,8 @@
 
 import { ItemsHandler } from '../base/items';
 import { ITransport } from '../transport';
-import { PermissionType, DefaultType } from '../types';
-
-export type PermissionItem<T = DefaultType> = PermissionType & T;
+import { DefaultType } from '../../types';
+import { PermissionItem } from '../../types';
 
 export class PermissionsHandler<T = DefaultType> extends ItemsHandler<PermissionItem<T>> {
 	constructor(transport: ITransport) {

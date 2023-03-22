@@ -4,11 +4,10 @@
 
 import { ItemsHandler } from '../base/items';
 import { ITransport } from '../transport';
-import { DefaultType, UserType } from '../types';
+import { DefaultType } from '../../types';
 import { InvitesHandler } from './invites';
 import { MeHandler } from './me';
-
-export type UserItem<T = DefaultType> = UserType & T;
+import { UserItem } from '../../types';
 
 export class UsersHandler<T = DefaultType> extends ItemsHandler<UserItem<T>> {
 	private _invites?: InvitesHandler;

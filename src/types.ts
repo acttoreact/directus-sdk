@@ -361,3 +361,32 @@ export type RequiredKeys<T> = {
 export type OptionalKeys<T> = {
 	[K in keyof T]-?: Record<string, never> extends { [P in K]: T[K] } ? K : never;
 }[keyof T];
+
+export type ActivityItem<T = DefaultType> = ActivityType & T;
+export type CollectionItem<T = DefaultType> = CollectionType & T;
+export type FieldItem<T = DefaultType> = FieldType & T;
+export type FileItem<T = DefaultType> = FileType & T;
+export type FolderItem<T = DefaultType> = FolderType & T;
+export type PermissionItem<T = DefaultType> = PermissionType & T;
+export type PresetItem<T = DefaultType> = PresetType & T;
+export type RelationItem<T = DefaultType> = RelationType & T;
+export type RevisionItem<T = DefaultType> = RevisionType & T;
+export type RoleItem<T = DefaultType> = RoleType & T;
+export type SettingItem<T = DefaultType> = SettingType & T;
+export type UserItem<T = DefaultType> = UserType & T;
+
+export type DirectusTypes = {
+	activity: undefined;
+	assets: undefined;
+	collections: undefined;
+	fields: undefined;
+	files: undefined;
+	folders: undefined;
+	permissions: undefined;
+	presets: undefined;
+	relations: undefined;
+	revisions: undefined;
+	roles: undefined;
+	settings: undefined;
+	users: undefined;
+};

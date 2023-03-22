@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, ResponseType } from 'axios';
-import { ItemMetadata } from './items';
+import { ItemMetadata } from '../items';
 
 export type TransportErrorDescription = {
 	message?: string;

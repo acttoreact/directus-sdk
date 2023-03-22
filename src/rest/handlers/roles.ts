@@ -4,9 +4,8 @@
 
 import { ItemsHandler } from '../base/items';
 import { ITransport } from '../transport';
-import { RoleType, DefaultType } from '../types';
-
-export type RoleItem<T = DefaultType> = RoleType & T;
+import { DefaultType } from '../../types';
+import { RoleItem } from '../../types';
 
 export class RolesHandler<T = DefaultType> extends ItemsHandler<RoleItem<T>> {
 	constructor(transport: ITransport) {

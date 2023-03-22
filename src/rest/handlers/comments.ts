@@ -1,8 +1,7 @@
-import { Comment, ID } from '../types';
+import { ActivityItem } from '../../types';
+import { EmptyParamError } from '../../items';
+import { ID } from '../../types';
 import { ITransport } from '../transport';
-import { ActivityItem } from './activity';
-import { EmptyParamError } from '../items';
-
 export class CommentsHandler<T> {
 	private transport: ITransport;
 

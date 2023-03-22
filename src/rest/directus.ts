@@ -22,23 +22,7 @@ import { UtilsHandler } from './handlers/utils';
 import { IStorage } from '../storage/storage';
 import { TypeMap, TypeOf } from '../types';
 import { GraphQLHandler } from './handlers/graphql';
-import { ISingleton } from './singleton';
-
-export type DirectusTypes = {
-	activity: undefined;
-	assets: undefined;
-	collections: undefined;
-	fields: undefined;
-	files: undefined;
-	folders: undefined;
-	permissions: undefined;
-	presets: undefined;
-	relations: undefined;
-	revisions: undefined;
-	roles: undefined;
-	settings: undefined;
-	users: undefined;
-};
+import { ISingleton } from '../items';
 
 export interface IDirectusBase {
 	readonly url: string;

@@ -26,8 +26,8 @@ import { IStorage } from '../../storage/storage';
 import { DirectusStorageOptions, LocalStorage, MemoryStorage } from '../../storage/';
 import { TypeMap, TypeOf, PartialBy } from '../../types';
 import { GraphQLHandler } from '../handlers/graphql';
-import { ISingleton } from '../singleton';
 import { SingletonHandler } from '../handlers/singleton';
+import { ISingleton } from '../../items';
 
 export type DirectusOptions<IAuthHandler extends IAuth = Auth> = {
 	auth?: IAuthHandler | PartialBy<AuthOptions, 'transport' | 'storage'>;

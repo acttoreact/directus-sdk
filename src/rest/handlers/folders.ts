@@ -2,11 +2,10 @@
  * Folders handler
  */
 
+import { FolderItem } from '../../types';
 import { ItemsHandler } from '../base/items';
 import { ITransport } from '../transport';
-import { FolderType, DefaultType } from '../types';
-
-export type FolderItem<T = DefaultType> = FolderType & T;
+import { DefaultType } from '../../types';
 
 export class FoldersHandler<T = DefaultType> extends ItemsHandler<FolderItem<T>> {
 	constructor(transport: ITransport) {

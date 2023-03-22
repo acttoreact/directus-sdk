@@ -1,16 +1,14 @@
 import { IStorage } from '../storage';
-import { PasswordsHandler } from './handlers/passwords';
 import { IWebSocketTransport } from './transport';
 
-export type AuthCredentials = {
+export type WebSocketAuthCredentials = {
 	email: string;
 	password: string;
-	otp?: string;
 };
 
-export type AuthResult = {
-	type: 'auth',
-	status: 'ok' | 'error',
+export type WebSocketAuthResult = {
+	type: 'auth';
+	status: 'ok' | 'error';
 	refresh_token?: string;
 };
 
@@ -23,8 +21,7 @@ export type WebSocketAuthOptions = {
 
 export abstract class IWebSocketAuth {
 	abstract readonly token: string | null;
-	abstract readonly password: PasswordsHandler;
 
-	abstract login(credentials: AuthCredentials): Promise<AuthResult>;
+	abstract login(credentials: WebSocketAuthCredentials): Promise<WebSocketAuthResult>;
 	abstract static(token: string): Promise<boolean>;
 }

@@ -3,7 +3,7 @@
  */
 
 import { ITransport } from '../transport';
-import { ID } from '../types';
+import { ID } from '../../types';
 
 export class UtilsHandler {
 	private transport: ITransport;

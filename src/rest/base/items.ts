@@ -1,16 +1,7 @@
 import { ITransport } from '../transport';
-import {
-	IItems,
-	Item,
-	QueryOne,
-	QueryMany,
-	OneItem,
-	ManyItems,
-	ItemInput,
-	ItemsOptions,
-	EmptyParamError,
-} from '../items';
-import { ID, FieldType } from '../types';
+import { Item, QueryOne, QueryMany, OneItem, ManyItems, ItemInput, EmptyParamError } from '../../items';
+import { ID, FieldType } from '../../types';
+import { IItems, ItemsOptions } from '../items';
 
 export class ItemsHandler<T extends Item> implements IItems<T> {
 	protected transport: ITransport;

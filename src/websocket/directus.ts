@@ -1,69 +1,45 @@
-import { IAuth, IWebSocketAuth } from './auth';
+import { IWebSocketAuth } from './auth';
 import {
-	ActivityHandler,
-	AssetsHandler,
-	CollectionsHandler,
-	FieldsHandler,
-	FilesHandler,
-	FoldersHandler,
-	PermissionsHandler,
-	PresetsHandler,
-	RelationsHandler,
-	RevisionsHandler,
-	RolesHandler,
-	ServerHandler,
-	SettingsHandler,
-	UsersHandler,
+	WebSocketActivityHandler,
+	WebSocketCollectionsHandler,
+	WebSocketFieldsHandler,
+	WebSocketFilesHandler,
+	WebSocketFoldersHandler,
+	WebSocketPermissionsHandler,
+	WebSocketPresetsHandler,
+	WebSocketRelationsHandler,
+	WebSocketRevisionsHandler,
+	WebSocketRolesHandler,
+	WebSocketSettingsHandler,
+	WebSocketUsersHandler,
 } from './handlers';
 
 import { IItems } from './items';
-import { UtilsHandler } from './handlers/utils';
 import { TypeMap, TypeOf } from '../types';
-import { GraphQLHandler } from './handlers/graphql';
-import { ISingleton } from './singleton';
+import { ISingleton } from '../items';
 import { IStorage } from '../storage';
 import { IWebSocketTransport } from './transport';
 
-export type DirectusTypes = {
-	activity: undefined;
-	assets: undefined;
-	collections: undefined;
-	fields: undefined;
-	files: undefined;
-	folders: undefined;
-	permissions: undefined;
-	presets: undefined;
-	relations: undefined;
-	revisions: undefined;
-	roles: undefined;
-	settings: undefined;
-	users: undefined;
-};
-
-export interface IDirectusBase {
+export interface IWebSocketDirectusBase {
 	readonly url: string;
 	readonly auth: IWebSocketAuth;
 	readonly storage: IStorage;
 	readonly transport: IWebSocketTransport;
-	readonly server: ServerHandler;
-	readonly utils: UtilsHandler;
-	readonly graphql: GraphQLHandler;
 }
 
-export interface IDirectusWebSocket<T extends TypeMap> extends IDirectusBase {
-	readonly activity: ActivityHandler<TypeOf<T, 'directus_activity'>>;
-	readonly assets: AssetsHandler;
-	readonly collections: CollectionsHandler<TypeOf<T, 'directus_collections'>>;
-	readonly files: FilesHandler<TypeOf<T, 'directus_files'>>;
-	readonly fields: FieldsHandler<TypeOf<T, 'directus_fields'>>;
-	readonly folders: FoldersHandler<TypeOf<T, 'directus_folders'>>;
-	readonly permissions: PermissionsHandler<TypeOf<T, 'directus_permissions'>>;
-	readonly presets: PresetsHandler<TypeOf<T, 'directus_presets'>>;
-	readonly revisions: RevisionsHandler<TypeOf<T, 'directus_revisions'>>;
-	readonly relations: RelationsHandler<TypeOf<T, 'directus_relations'>>;
-	readonly roles: RolesHandler<TypeOf<T, 'directus_roles'>>;
-	readonly users: UsersHandler<TypeOf<T, 'directus_users'>>;
-	readonly settings: SettingsHandler<TypeOf<T, 'directus_settings'>>;
+export interface IDirectusWebSocket<T extends TypeMap> extends IWebSocketDirectusBase {
+	readonly activity: WebSocketActivityHandler<TypeOf<T, 'directus_activity'>>;
+	readonly collections: WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>>;
+	readonly files: WebSocketFilesHandler<TypeOf<T, 'directus_files'>>;
+	readonly fields: WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>>;
+	readonly folders: WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>>;
+	readonly permissions: WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>>;
+	readonly presets: WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>>;
+	readonly revisions: WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>>;
+	readonly relations: WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>>;
+	readonly roles: WebSocketRolesHandler<TypeOf<T, 'directus_roles'>>;
+	readonly users: WebSocketUsersHandler<TypeOf<T, 'directus_users'>>;
+	readonly settings: WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>>;
 
 	items<C extends string, I = TypeOf<T, C>>(collection: C): IItems<I>;
 	singleton<C extends string, I = TypeOf<T, C>>(collection: C): ISingleton<I>;

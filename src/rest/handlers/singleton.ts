@@ -1,6 +1,6 @@
 import { ITransport } from '../transport';
-import { QueryOne, OneItem, ItemInput } from '../items';
-import { ISingleton } from '../singleton';
+import { QueryOne, OneItem, ItemInput } from '../../items';
+import { ISingleton } from '../../items';
 
 export class SingletonHandler<T> implements ISingleton<T> {
 	protected collection: string;

@@ -1,11 +1,11 @@
 /**
  * Relations handler
  */
-import { ManyItems, OneItem, ItemInput, EmptyParamError } from '../items';
+import { ManyItems, OneItem, ItemInput, EmptyParamError } from '../../items';
 import { ITransport } from '../transport';
-import { RelationType, DefaultType, ID } from '../types';
+import { ID } from '../../types';
+import { RelationItem } from '../../types';
 
-export type RelationItem<T = DefaultType> = RelationType & T;
 export class RelationsHandler<T = RelationItem> {
 	transport: ITransport;
 

@@ -1,9 +1,8 @@
-import { Comment, ID } from '../../types';
+import { ActivityItem, Comment, ID } from '../../types';
 import { IWebSocketTransport } from '../transport';
-import { ActivityItem } from './activity';
-import { EmptyParamError } from '../items';
+import { EmptyParamError } from '../../items';
 
-export class CommentsHandler<T> {
+export class WebSocketCommentsHandler<T> {
 	private transport: IWebSocketTransport;
 
 	constructor(transport: IWebSocketTransport) {
@@ -17,7 +16,7 @@ export class CommentsHandler<T> {
 			action: 'create',
 			data: comment,
 		});
-		return response.data;
+		return response.data as ActivityItem<T>;
 	}
 
 	async update(comment_activity_id: ID, comment: string): Promise<ActivityItem<T>> {
@@ -29,7 +28,7 @@ export class CommentsHandler<T> {
 			id: comment_activity_id,
 			data: { comment },
 		});
-		return response.data;
+		return response.data as ActivityItem<T>;
 	}
 
 	async delete(comment_activity_id: ID): Promise<void> {

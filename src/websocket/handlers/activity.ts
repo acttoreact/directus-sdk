@@ -2,22 +2,21 @@
  * Activity handler
  */
 
-import { ItemsHandler } from '../base/items';
+import { WebSocketItemsHandler } from '../base/items';
 import { IWebSocketTransport } from '../transport';
-import { ActivityType, DefaultType } from '../../types';
-import { CommentsHandler } from './comments';
+import { DefaultType } from '../../types';
+import { WebSocketCommentsHandler } from './comments';
+import { ActivityItem } from '../../types';
 
-export type ActivityItem<T = DefaultType> = ActivityType & T;
-
-export class ActivityHandler<T = DefaultType> extends ItemsHandler<ActivityItem<T>> {
-	private _comments: CommentsHandler<T>;
+export class WebSocketActivityHandler<T = DefaultType> extends WebSocketItemsHandler<ActivityItem<T>> {
+	private _comments: WebSocketCommentsHandler<T>;
 
 	constructor(transport: IWebSocketTransport) {
 		super('directus_activity', transport);
-		this._comments = new CommentsHandler(this.transport);
+		this._comments = new WebSocketCommentsHandler(this.transport);
 	}
 
-	get comments(): CommentsHandler<T> {
+	get comments(): WebSocketCommentsHandler<T> {
 		return this._comments;
 	}
 }

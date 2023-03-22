@@ -4,9 +4,8 @@
 
 import { ItemsHandler } from '../base/items';
 import { ITransport } from '../transport';
-import { RevisionType, DefaultType } from '../types';
-
-export type RevisionItem<T = DefaultType> = RevisionType & T;
+import { DefaultType } from '../../types';
+import { RevisionItem } from '../../types';
 
 export class RevisionsHandler<T = DefaultType> extends ItemsHandler<RevisionItem<T>> {
 	constructor(transport: ITransport) {

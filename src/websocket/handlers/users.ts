@@ -2,13 +2,12 @@
  * Users handler
  */
 
-import { ItemsHandler } from '../base/items';
+import { WebSocketItemsHandler } from '../base/items';
 import { IWebSocketTransport } from '../transport';
-import { DefaultType, UserType } from '../../types';
-export type UserItem<T = DefaultType> = UserType & T;
+import { DefaultType } from '../../types';
+import { UserItem } from '../../types';
 
-export class UsersHandler<T = DefaultType> extends ItemsHandler<UserItem<T>> {
-
+export class WebSocketUsersHandler<T = DefaultType> extends WebSocketItemsHandler<UserItem<T>> {
 	constructor(transport: IWebSocketTransport) {
 		super('directus_users', transport);
 	}

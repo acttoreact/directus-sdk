@@ -3,11 +3,10 @@
  */
 
 import { ItemsHandler } from '../base/items';
-import { OneItem, ItemInput } from '../items';
+import { OneItem, ItemInput } from '../../items';
 import { ITransport } from '../transport';
-import { FileType, DefaultType } from '../types';
-
-export type FileItem<T = DefaultType> = FileType & T;
+import { DefaultType } from '../../types';
+import { FileItem } from '../../types';
 
 export class FilesHandler<T = DefaultType> extends ItemsHandler<FileItem<T>> {
 	constructor(transport: ITransport) {
