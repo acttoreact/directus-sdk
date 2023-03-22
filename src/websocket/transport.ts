@@ -30,7 +30,6 @@ type ItemsResponse<T> = {
 type SubscribeRequest<T> = {
 	type: 'subscribe';
 	collection: string;
-	action: 'create' | 'read' | 'update' | 'delete';
 	id?: ID;
 	ids?: ID[];
 	query?: QueryMany<T>;
@@ -73,17 +72,17 @@ type AuthResponse =
 	  };
 
 export abstract class IWebSocketTransport {
-	abstract send(data: Record<string, any>): number;
+	abstract send(data: Record<string, any>): string;
 	abstract request<T = any, R = any>(data: ItemsRequest<R>): Promise<ItemsResponse<T>>;
 	abstract request<T = any>(data: SubscribeRequest<T>): Promise<SubscribeResponse<T>>;
 	abstract request(data: AuthRequest): Promise<AuthResponse>;
 	abstract onOpen(listener: () => void): void;
 	abstract onClose(listener: () => void): void;
-	abstract onError(listener: (err: Event) => void): void;
+	abstract onError(listener: (err: Error) => void): void;
 	abstract onMessage(listener: (event: Record<string, any>) => void): void;
 
 	abstract offOpen(listener: () => void): void;
 	abstract offClose(listener: () => void): void;
-	abstract offError(listener: (err: Event) => void): void;
+	abstract offError(listener: (err: Error) => void): void;
 	abstract offMessage(listener: (event: Record<string, any>) => void): void;
 }

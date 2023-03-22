@@ -17,7 +17,7 @@ export class WebSocketItemsHandler<T extends Item> implements IItems<T> {
 		const response = await this.transport.request<OneItem<T, Q>>({
 			type: 'items',
 			collection: this.collection,
-			action: 'get',
+			action: 'read',
 			id,
 			query,
 		});
@@ -26,10 +26,10 @@ export class WebSocketItemsHandler<T extends Item> implements IItems<T> {
 	}
 
 	async readMany<Q extends QueryMany<T>>(ids: ID[], query?: Q): Promise<ManyItems<T, Q>> {
-		const response = await this.transport.request<NonNullable<OneItem<T, Q>>[]>({
+		const response = await this.transport.request({
 			type: 'items',
 			collection: this.collection,
-			action: 'get',
+			action: 'read',
 			ids,
 			query,
 		});
@@ -38,10 +38,10 @@ export class WebSocketItemsHandler<T extends Item> implements IItems<T> {
 	}
 
 	async readByQuery<Q extends QueryMany<T>>(query?: Q): Promise<ManyItems<T, Q>> {
-		const response = await this.transport.request<NonNullable<OneItem<T, Q>>[]>({
+		const response = await this.transport.request({
 			type: 'items',
 			collection: this.collection,
-			action: 'get',
+			action: 'read',
 			query,
 		});
 
@@ -62,7 +62,7 @@ export class WebSocketItemsHandler<T extends Item> implements IItems<T> {
 
 	async createMany<Q extends QueryMany<T>>(items: ItemInput<T>[], query?: Q): Promise<ManyItems<T, Q>> {
 		return (
-			await this.transport.request<NonNullable<OneItem<T, Q>>[]>({
+			await this.transport.request<ManyItems<T, Q>>({
 				type: 'items',
 				collection: this.collection,
 				action: 'create',
@@ -88,7 +88,7 @@ export class WebSocketItemsHandler<T extends Item> implements IItems<T> {
 
 	async updateMany<Q extends QueryMany<T>>(ids: ID[], data: ItemInput<T>, query?: Q): Promise<ManyItems<T, Q>> {
 		return (
-			await this.transport.request<NonNullable<OneItem<T, Q>>[]>({
+			await this.transport.request<ManyItems<T, Q>>({
 				type: 'items',
 				collection: this.collection,
 				action: 'update',
@@ -101,7 +101,7 @@ export class WebSocketItemsHandler<T extends Item> implements IItems<T> {
 
 	async updateBatch<Q extends QueryMany<T>>(items: ItemInput<T>[], query?: Q): Promise<ManyItems<T, Q>> {
 		return (
-			await this.transport.request<NonNullable<OneItem<T, Q>>[]>({
+			await this.transport.request<ManyItems<T, Q>>({
 				type: 'items',
 				collection: this.collection,
 				action: 'update',

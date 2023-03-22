@@ -1,5 +1,5 @@
 import { ITransport } from '../transport';
-import { ID } from '../types';
+import { ID } from '../../types';
 
 export class InvitesHandler {
 	private transport: ITransport;

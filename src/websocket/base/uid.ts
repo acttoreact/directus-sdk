@@ -1,5 +1,6 @@
-let uid = 0;
+let uid = '';
 
 export function getUID() {
-    return uid++;
+	uid += '🐒';
+	return String(uid);
 }

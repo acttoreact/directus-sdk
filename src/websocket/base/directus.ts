@@ -24,7 +24,7 @@ import { WebSocketSingletonHandler } from '../handlers/singleton';
 import { DirectusStorageOptions } from '../../storage';
 import { IStorage } from '../../storage';
 import { IWebSocketAuth, WebSocketAuthOptions } from '../auth';
-import { Subscriptions } from './subscriptions';
+import { SubscriptionOptions, Subscriptions } from './subscriptions';
 import { IItems } from '../items';
 
 export type WebSocketDirectusOptions<IAuthHandler extends IWebSocketAuth = WebSocketAuth> = {
@@ -37,7 +37,7 @@ export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocke
 	implements IDirectusWebSocket<T>
 {
 	private _url: string;
-	private _options?: WebSocketDirectusOptions;
+	private _options?: WebSocketDirectusOptions<IAuthHandler>;
 	private _auth: IAuthHandler;
 	private _transport: IWebSocketTransport;
 	private _storage: IStorage;
@@ -63,7 +63,7 @@ export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocke
 		[collection: string]: WebSocketSingletonHandler<any>;
 	};
 
-	constructor(url: string, options?: WebSocketDirectusOptions) {
+	constructor(url: string, options?: WebSocketDirectusOptions<IAuthHandler>) {
 		this._url = url;
 		this._options = options;
 		this._items = {};
@@ -98,8 +98,10 @@ export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocke
 				transport: this._transport,
 				storage: this._storage,
 				...this._options?.auth,
-			});
+			}) as unknown as IAuthHandler;
 		}
+
+		this._subscriptions = new Subscriptions(this.transport);
 	}
 
 	get url() {
@@ -198,9 +200,10 @@ export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocke
 		);
 	}
 
-	subscribe<C extends string, I = TypeOf<T, C>>(collection: C, callback: (data: IItems<I>[]) => void) {
-		if (!this._subscriptions) this._subscriptions = new Subscriptions(this.transport);
-
-		return this._subscriptions.subscribe(collection, callback);
+	subscribe<C extends string, I = TypeOf<T, C>>(
+		options: SubscriptionOptions<I, C>,
+		callback: (data: IItems<I>) => void
+	) {
+		return this._subscriptions.subscribe(options, callback);
 	}
 }

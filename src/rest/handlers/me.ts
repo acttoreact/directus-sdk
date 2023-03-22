@@ -1,4 +1,4 @@
-import { ItemInput, QueryOne } from '../items';
+import { ItemInput, QueryOne } from '../../items';
 import { ITransport } from '../transport';
 import { TFAHandler } from './tfa';
 
