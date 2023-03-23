@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { Directus } from '../../src';
-import { test } from '../utils';
+import { Directus } from '../../../src/rest';
+import { test } from '../../utils';
 
 describe('auth (browser)', function () {
 	beforeEach(() => {

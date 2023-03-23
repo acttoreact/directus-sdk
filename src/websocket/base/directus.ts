@@ -1,18 +1,18 @@
 import { IDirectusWebSocket } from '../directus';
-import {
-	WebSocketActivityHandler,
-	WebSocketCollectionsHandler,
-	WebSocketFieldsHandler,
-	WebSocketFilesHandler,
-	WebSocketFoldersHandler,
-	WebSocketPermissionsHandler,
-	WebSocketPresetsHandler,
-	WebSocketRelationsHandler,
-	WebSocketRevisionsHandler,
-	WebSocketRolesHandler,
-	WebSocketSettingsHandler,
-	WebSocketUsersHandler,
-} from '../handlers';
+// import {
+// 	WebSocketActivityHandler,
+// 	WebSocketCollectionsHandler,
+// 	WebSocketFieldsHandler,
+// 	WebSocketFilesHandler,
+// 	WebSocketFoldersHandler,
+// 	WebSocketPermissionsHandler,
+// 	WebSocketPresetsHandler,
+// 	WebSocketRelationsHandler,
+// 	WebSocketRevisionsHandler,
+// 	WebSocketRolesHandler,
+// 	WebSocketSettingsHandler,
+// 	WebSocketUsersHandler,
+// } from '../handlers';
 import { IWebSocketTransport, WebSocketTransportOptions } from '../transport';
 import { WebSocketItemsHandler } from './items';
 import { WebSocketTransport } from './transport';
@@ -33,7 +33,7 @@ export type WebSocketDirectusOptions<IAuthHandler extends IWebSocketAuth = WebSo
 	storage?: IStorage | DirectusStorageOptions;
 };
 
-export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocketAuth = WebSocketAuth>
+export class DirectusWebSocket<T extends TypeMap, IAuthHandler extends IWebSocketAuth = WebSocketAuth>
 	implements IDirectusWebSocket<T>
 {
 	private _url: string;
@@ -41,18 +41,18 @@ export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocke
 	private _auth: IAuthHandler;
 	private _transport: IWebSocketTransport;
 	private _storage: IStorage;
-	private _activity?: WebSocketActivityHandler<TypeOf<T, 'directus_activity'>>;
-	private _collections?: WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>>;
-	private _fields?: WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>>;
-	private _files?: WebSocketFilesHandler<TypeOf<T, 'directus_files'>>;
-	private _folders?: WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>>;
-	private _permissions?: WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>>;
-	private _presets?: WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>>;
-	private _relations?: WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>>;
-	private _revisions?: WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>>;
-	private _roles?: WebSocketRolesHandler<TypeOf<T, 'directus_roles'>>;
-	private _users?: WebSocketUsersHandler<TypeOf<T, 'directus_users'>>;
-	private _settings?: WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>>;
+	// private _activity?: WebSocketActivityHandler<TypeOf<T, 'directus_activity'>>;
+	// private _collections?: WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>>;
+	// private _fields?: WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>>;
+	// private _files?: WebSocketFilesHandler<TypeOf<T, 'directus_files'>>;
+	// private _folders?: WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>>;
+	// private _permissions?: WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>>;
+	// private _presets?: WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>>;
+	// private _relations?: WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>>;
+	// private _revisions?: WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>>;
+	// private _roles?: WebSocketRolesHandler<TypeOf<T, 'directus_roles'>>;
+	// private _users?: WebSocketUsersHandler<TypeOf<T, 'directus_users'>>;
+	// private _settings?: WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>>;
 	private _subscriptions: Subscriptions;
 
 	private _items: {
@@ -120,72 +120,72 @@ export class DirectusWebsocket<T extends TypeMap, IAuthHandler extends IWebSocke
 		return this._transport;
 	}
 
-	get activity(): WebSocketActivityHandler<TypeOf<T, 'directus_activity'>> {
-		return (
-			this._activity || (this._activity = new WebSocketActivityHandler<TypeOf<T, 'directus_activity'>>(this.transport))
-		);
-	}
+	// get activity(): WebSocketActivityHandler<TypeOf<T, 'directus_activity'>> {
+	// 	return (
+	// 		this._activity || (this._activity = new WebSocketActivityHandler<TypeOf<T, 'directus_activity'>>(this.transport))
+	// 	);
+	// }
 
-	get collections(): WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>> {
-		return (
-			this._collections ||
-			(this._collections = new WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>>(this.transport))
-		);
-	}
+	// get collections(): WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>> {
+	// 	return (
+	// 		this._collections ||
+	// 		(this._collections = new WebSocketCollectionsHandler<TypeOf<T, 'directus_collections'>>(this.transport))
+	// 	);
+	// }
 
-	get fields(): WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>> {
-		return this._fields || (this._fields = new WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>>(this.transport));
-	}
+	// get fields(): WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>> {
+	// 	return this._fields || (this._fields = new WebSocketFieldsHandler<TypeOf<T, 'directus_fields'>>(this.transport));
+	// }
 
-	get files(): WebSocketFilesHandler<TypeOf<T, 'directus_files'>> {
-		return this._files || (this._files = new WebSocketFilesHandler<TypeOf<T, 'directus_files'>>(this.transport));
-	}
+	// get files(): WebSocketFilesHandler<TypeOf<T, 'directus_files'>> {
+	// 	return this._files || (this._files = new WebSocketFilesHandler<TypeOf<T, 'directus_files'>>(this.transport));
+	// }
 
-	get folders(): WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>> {
-		return (
-			this._folders || (this._folders = new WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>>(this.transport))
-		);
-	}
+	// get folders(): WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>> {
+	// 	return (
+	// 		this._folders || (this._folders = new WebSocketFoldersHandler<TypeOf<T, 'directus_folders'>>(this.transport))
+	// 	);
+	// }
 
-	get permissions(): WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>> {
-		return (
-			this._permissions ||
-			(this._permissions = new WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>>(this.transport))
-		);
-	}
+	// get permissions(): WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>> {
+	// 	return (
+	// 		this._permissions ||
+	// 		(this._permissions = new WebSocketPermissionsHandler<TypeOf<T, 'directus_permissions'>>(this.transport))
+	// 	);
+	// }
 
-	get presets(): WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>> {
-		return (
-			this._presets || (this._presets = new WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>>(this.transport))
-		);
-	}
+	// get presets(): WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>> {
+	// 	return (
+	// 		this._presets || (this._presets = new WebSocketPresetsHandler<TypeOf<T, 'directus_presets'>>(this.transport))
+	// 	);
+	// }
 
-	get relations(): WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>> {
-		return (
-			this._relations ||
-			(this._relations = new WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>>(this.transport))
-		);
-	}
+	// get relations(): WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>> {
+	// 	return (
+	// 		this._relations ||
+	// 		(this._relations = new WebSocketRelationsHandler<TypeOf<T, 'directus_relations'>>(this.transport))
+	// 	);
+	// }
 
-	get revisions(): WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>> {
-		return (
-			this._revisions ||
-			(this._revisions = new WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>>(this.transport))
-		);
-	}
+	// get revisions(): WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>> {
+	// 	return (
+	// 		this._revisions ||
+	// 		(this._revisions = new WebSocketRevisionsHandler<TypeOf<T, 'directus_revisions'>>(this.transport))
+	// 	);
+	// }
 
-	get roles(): WebSocketRolesHandler<TypeOf<T, 'directus_roles'>> {
-		return this._roles || (this._roles = new WebSocketRolesHandler<TypeOf<T, 'directus_roles'>>(this.transport));
-	}
+	// get roles(): WebSocketRolesHandler<TypeOf<T, 'directus_roles'>> {
+	// 	return this._roles || (this._roles = new WebSocketRolesHandler<TypeOf<T, 'directus_roles'>>(this.transport));
+	// }
 
-	get users(): WebSocketUsersHandler<TypeOf<T, 'directus_users'>> {
-		return this._users || (this._users = new WebSocketUsersHandler<TypeOf<T, 'directus_users'>>(this.transport));
-	}
-	get settings(): WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>> {
-		return (
-			this._settings || (this._settings = new WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>>(this.transport))
-		);
-	}
+	// get users(): WebSocketUsersHandler<TypeOf<T, 'directus_users'>> {
+	// 	return this._users || (this._users = new WebSocketUsersHandler<TypeOf<T, 'directus_users'>>(this.transport));
+	// }
+	// get settings(): WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>> {
+	// 	return (
+	// 		this._settings || (this._settings = new WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>>(this.transport))
+	// 	);
+	// }
 
 	singleton<C extends string, I = TypeOf<T, C>>(collection: C): ISingleton<I> {
 		return (

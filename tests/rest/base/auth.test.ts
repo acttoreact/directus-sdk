@@ -2,8 +2,9 @@
  * @jest-environment node
  */
 
-import { Auth, Directus, MemoryStorage, Transport } from '../../src';
-import { test } from '../utils';
+import { Auth, Directus, Transport } from '../../../src/rest';
+import { MemoryStorage } from '../../../src/storage';
+import { test } from '../../utils';
 
 describe('auth', function () {
 	test(`static auth should validate token`, async (url, nock) => {

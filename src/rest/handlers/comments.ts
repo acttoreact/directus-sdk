@@ -1,4 +1,4 @@
-import { ActivityItem } from '../../types';
+import { ActivityItem, Comment } from '../../types';
 import { EmptyParamError } from '../../items';
 import { ID } from '../../types';
 import { ITransport } from '../transport';

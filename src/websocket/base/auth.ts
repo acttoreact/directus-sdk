@@ -19,8 +19,22 @@ export class WebSocketAuth extends IWebSocketAuth {
 
 		if (options?.staticToken) {
 			this.staticToken = options?.staticToken;
-			this._storage.auth_token = this.staticToken;
+			this._storage.ws_auth_token = this.staticToken;
 		}
+
+		this._transport.onOpen(async () => {
+			if (this.staticToken) {
+				await this._transport.request({
+					type: 'auth',
+					access_token: this.staticToken,
+				});
+			} else if (this._storage.ws_auth_token) {
+				await this._transport.request({
+					type: 'auth',
+					access_token: this._storage.ws_auth_token,
+				});
+			}
+		});
 
 		this._transport.onMessage(async (data) => {
 			if (data.type !== 'auth') return;
@@ -40,9 +54,9 @@ export class WebSocketAuth extends IWebSocketAuth {
 					this._storage.ws_auth_refresh_token = response.refresh_token ?? null;
 					return;
 				}
-			}
 
-			this.resetStorage();
+				this.resetStorage();
+			}
 		});
 	}
 
@@ -70,7 +84,7 @@ export class WebSocketAuth extends IWebSocketAuth {
 			...credentials,
 		});
 
-		this._storage.auth_refresh_token = response.status === 'ok' ? response.refresh_token : null;
+		this._storage.ws_auth_refresh_token = response.status === 'ok' ? response.refresh_token : null;
 
 		return response;
 	}
@@ -83,7 +97,7 @@ export class WebSocketAuth extends IWebSocketAuth {
 			access_token: token,
 		});
 
-		this._storage.auth_token = token;
+		this._storage.ws_auth_token = token;
 
 		return true;
 	}

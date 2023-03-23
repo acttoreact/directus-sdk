@@ -2,10 +2,6 @@
  * @jest-environment node
  */
 
-import { Auth } from '../../src/base/auth';
-import { ItemsHandler } from '../../src/base/items';
-import { Transport } from '../../src/base/transport';
-import { Directus } from '../../src/base';
 import {
 	ActivityHandler,
 	CollectionsHandler,
@@ -22,11 +18,12 @@ import {
 	SettingsHandler,
 	UsersHandler,
 	UtilsHandler,
-} from '../../src/handlers';
-import { test } from '../utils';
-import { InvitesHandler } from '../../src/handlers/invites';
-import { TFAHandler } from '../../src/handlers/tfa';
-import { MeHandler } from '../../src/handlers/me';
+} from '../../../src/rest';
+import { test } from '../../utils';
+import { Auth, Directus, ItemsHandler, Transport } from '../../../src/rest';
+import { InvitesHandler } from '../../../src/rest/handlers/invites';
+import { MeHandler } from '../../../src/rest/handlers/me';
+import { TFAHandler } from '../../../src/rest/handlers/tfa';
 
 describe('sdk', function () {
 	const sdk = new Directus('http://example.com');

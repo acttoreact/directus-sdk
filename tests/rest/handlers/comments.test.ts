@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import { Directus } from '../../src';
-import { test } from '../utils';
+import { Directus } from '../../../src';
+import { test } from '../../utils';
 
 describe('comments', function () {
 	test(`creates comments`, async (url, nock) => {

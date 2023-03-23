@@ -2,10 +2,8 @@
  * @jest-environment node
  */
 
+import { Transport, TransportError, TransportResponse } from '../../../src/rest';
 import nock from 'nock';
-
-import { Transport } from '../../src/base/transport';
-import { TransportResponse, TransportError } from '../../src/transport';
 
 describe('default transport', function () {
 	const URL = 'http://localhost';
@@ -19,7 +17,7 @@ describe('default transport', function () {
 			expect(response.statusText).toBe(expected.statusText);
 		}
 		if (expected.data) {
-			expect(response.data).toMatchObject<T | T[]>(expected.data);
+			expect(response.data).toMatchObject(expected.data);
 		}
 		if (expected.headers) {
 			expect(response.headers).toMatchObject(expected.headers);

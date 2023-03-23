@@ -61,11 +61,7 @@ export class WebSocketTransport extends IWebSocketTransport {
 	request<T = any>(data: Record<string, any>) {
 		const uid = this.send(data);
 
-		if (uid !== '-1') {
-			return this.waitForResponse<T>(uid);
-		}
-
-		return Promise.reject(new Error('Request error'));
+		return this.waitForResponse<T>(uid);
 	}
 
 	private waitForResponse<T = any>(uid: string) {

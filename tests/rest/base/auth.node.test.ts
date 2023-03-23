@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import { Directus } from '../../src';
-import { test } from '../utils';
+import { Directus } from '../../../src/rest';
+import { test } from '../../utils';
 
 describe('auth (node)', function () {
 	test(`sets default auth mode to json`, async (url) => {
