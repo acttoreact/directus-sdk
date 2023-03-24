@@ -108,7 +108,7 @@ export class Auth extends IAuth {
 	refresh(force = false): Promise<AuthResult | false> {
 		const refreshPromise = async () => {
 			const refresh_token = this._storage.auth_refresh_token;
-			if (force && !refresh_token) return false;
+			if (!force && !refresh_token) return false;
 
 			this.resetStorage();
 
