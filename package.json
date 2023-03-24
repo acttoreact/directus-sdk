@@ -1,6 +1,6 @@
 {
 	"name": "@directus/sdk",
-	"version": "10.3.2",
+	"version": "10.3.3",
 	"description": "The official Directus SDK for use in JavaScript!",
 	"repository": "directus/sdk",
 	"main": "dist/sdk.cjs.js",
