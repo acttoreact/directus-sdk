@@ -108,6 +108,7 @@ export class Auth extends IAuth {
 	refresh(): Promise<AuthResult | false> {
 		const refreshPromise = async () => {
 			const refresh_token = this._storage.auth_refresh_token;
+
 			this.resetStorage();
 
 			const response = await this._transport.post<AuthResult>('/auth/refresh', {

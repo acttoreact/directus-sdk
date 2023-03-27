@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IAuth, AuthOptions } from '../auth';
 import { IDirectus } from '../directus';
 import {
@@ -91,7 +92,10 @@ export class Directus<T extends TypeMap, IAuthHandler extends IAuth = Auth> impl
 				url: this.url,
 				...this._options?.transport,
 				beforeRequest: async (config) => {
-					await this._auth.refreshIfExpired();
+					if(this._url.indexOf('/auth/refresh') === -1 && config.method?.toLowerCase() !== 'post'){
+						await this._auth.refreshIfExpired();
+					}
+
 					const token = this.storage.auth_token;
 					const bearer = token
 						? token.startsWith(`Bearer `)
