@@ -19,7 +19,7 @@ import { TypeMap, TypeOf } from '../types';
 import { ISingleton } from '../items';
 import { IStorage } from '../storage';
 import { IWebSocketTransport } from './transport';
-import { SubscriptionOptions } from './base/subscriptions';
+import { ISubscription } from './subscription';
 
 export interface IWebSocketDirectusBase {
 	readonly url: string;
@@ -44,9 +44,5 @@ export interface IDirectusWebSocket<T extends TypeMap> extends IWebSocketDirectu
 
 	items<C extends string, I = TypeOf<T, C>>(collection: C): IItems<I>;
 	singleton<C extends string, I = TypeOf<T, C>>(collection: C): ISingleton<I>;
-
-	subscribe<C extends string, I = TypeOf<T, C>>(
-		options: SubscriptionOptions<I, C>,
-		callback: (items: IItems<I>) => void
-	): () => void;
+	subscribe<C extends string, I = TypeOf<T, C>>(collection: C): ISubscription<I>;
 }

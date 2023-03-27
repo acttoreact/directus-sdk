@@ -24,8 +24,9 @@ import { WebSocketSingletonHandler } from '../handlers/singleton';
 import { DirectusStorageOptions } from '../../storage';
 import { IStorage } from '../../storage';
 import { IWebSocketAuth, WebSocketAuthOptions } from '../auth';
-import { SubscriptionOptions, Subscriptions } from './subscriptions';
+import { SubscriptionsHandler } from './subscriptions';
 import { IItems } from '../items';
+import { ISubscription } from '../subscription';
 
 export type WebSocketDirectusOptions<IAuthHandler extends IWebSocketAuth = WebSocketAuth> = {
 	auth?: IAuthHandler | PartialBy<WebSocketAuthOptions, 'transport' | 'storage'>;
@@ -53,7 +54,6 @@ export class DirectusWebSocket<T extends TypeMap, IAuthHandler extends IWebSocke
 	// private _roles?: WebSocketRolesHandler<TypeOf<T, 'directus_roles'>>;
 	// private _users?: WebSocketUsersHandler<TypeOf<T, 'directus_users'>>;
 	// private _settings?: WebSocketSettingsHandler<TypeOf<T, 'directus_settings'>>;
-	private _subscriptions: Subscriptions;
 
 	private _items: {
 		[collection: string]: WebSocketItemsHandler<any>;
@@ -63,11 +63,16 @@ export class DirectusWebSocket<T extends TypeMap, IAuthHandler extends IWebSocke
 		[collection: string]: WebSocketSingletonHandler<any>;
 	};
 
+	private _subscriptions: {
+		[collection: string]: SubscriptionsHandler<any>;
+	};
+
 	constructor(url: string, options?: WebSocketDirectusOptions<IAuthHandler>) {
 		this._url = url;
 		this._options = options;
 		this._items = {};
 		this._singletons = {};
+		this._subscriptions = {};
 
 		if (this._options?.storage && this._options?.storage instanceof IStorage) this._storage = this._options.storage;
 		else {
@@ -100,8 +105,6 @@ export class DirectusWebSocket<T extends TypeMap, IAuthHandler extends IWebSocke
 				...this._options?.auth,
 			}) as unknown as IAuthHandler;
 		}
-
-		this._subscriptions = new Subscriptions(this.transport);
 	}
 
 	get url() {
@@ -200,10 +203,10 @@ export class DirectusWebSocket<T extends TypeMap, IAuthHandler extends IWebSocke
 		);
 	}
 
-	subscribe<C extends string, I = TypeOf<T, C>>(
-		options: SubscriptionOptions<I, C>,
-		callback: (data: IItems<I>) => void
-	) {
-		return this._subscriptions.subscribe(options, callback);
+	subscribe<C extends string, I = TypeOf<T, C>>(collection: C): ISubscription<I> {
+		return (
+			this._subscriptions[collection] ||
+			(this._subscriptions[collection] = new SubscriptionsHandler<I>(collection, this.transport))
+		);
 	}
 }
