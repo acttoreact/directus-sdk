@@ -28,11 +28,6 @@ export class WebSocketAuth extends IWebSocketAuth {
 					type: 'auth',
 					access_token: this.staticToken,
 				});
-			} else if (this._storage.ws_auth_token) {
-				await this._transport.request({
-					type: 'auth',
-					access_token: this._storage.ws_auth_token,
-				});
 			}
 		});
 

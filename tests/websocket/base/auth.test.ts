@@ -3,6 +3,7 @@ import { DirectusWebSocket } from '../../../src';
 const webSocketServer = {
 	send: jest.fn(),
 	onmessage: jest.fn(),
+	onopen: jest.fn(),
 };
 
 jest.mock('websocket', () => {
@@ -14,7 +15,14 @@ jest.mock('websocket', () => {
 afterEach(jest.clearAllMocks);
 
 describe('auth', () => {
-	const sdk = new DirectusWebSocket('http://example.com');
+	const sdk = new DirectusWebSocket('http://example.com', {
+		auth: {
+			staticToken: '🔑',
+		},
+		transport: {
+			responseTimeout: 1000,
+		},
+	});
 
 	test('logging in with username and password', async () => {
 		const promise = sdk.auth.login({
@@ -108,5 +116,17 @@ describe('auth', () => {
 		);
 
 		webSocketServer.onmessage({ data: JSON.stringify({ type: 'auth', status: 'ok', refresh_token: '🔑🔑🔑🔑🔑🔑' }) });
+	});
+
+	test('logging in with token initially', async () => {
+		webSocketServer.onopen();
+
+		expect(webSocketServer.send).toHaveBeenCalledWith(
+			JSON.stringify({
+				type: 'auth',
+				access_token: '🔑',
+				uid: '🦍🦍',
+			})
+		);
 	});
 });
