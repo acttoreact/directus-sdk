@@ -4,7 +4,6 @@ import { ID } from '../types';
 export type WebSocketTransportOptions = {
 	url: string;
 	responseTimeout?: number;
-	mode: 'public' | 'handshake' | 'strict';
 };
 
 type ItemsRequest<T> = {
