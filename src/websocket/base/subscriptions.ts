@@ -28,6 +28,10 @@ export class SubscriptionsHandler<T extends Item> {
 		});
 	}
 
+	all<Q extends QueryOne<T>>(callback: (data: SubscriptionResponse<SubscriptionItem<T, Q>[]>) => void, query?: Q) {
+		return this.subscribe({ query }, callback);
+	}
+
 	one<Q extends QueryOne<T>>(
 		id: ID,
 		callback: (data: SubscriptionResponse<SubscriptionItem<T, Q>[]>) => void,

@@ -13,6 +13,10 @@ export type SubscriptionResponse<T> = {
 };
 
 export interface ISubscription<T extends Item> {
+	all<Q extends QueryOne<T>>(
+		callback: (data: SubscriptionResponse<SubscriptionItem<T, Q>[]>) => void,
+		query?: Q
+	): () => void;
 	one<Q extends QueryOne<T>>(
 		id: ID,
 		callback: (data: SubscriptionResponse<SubscriptionItem<T, Q>[]>) => void,

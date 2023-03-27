@@ -19,12 +19,7 @@ describe('subscriptions', () => {
 	test('subscribe to a collection', () => {
 		const fn = jest.fn();
 
-		sdk.subscribe(
-			{
-				collection: 'test',
-			},
-			fn
-		);
+		sdk.subscribe('test').all(fn);
 
 		expect(fn).not.toHaveBeenCalled();
 
@@ -37,7 +32,6 @@ describe('subscriptions', () => {
 		});
 
 		expect(fn).toHaveBeenLastCalledWith({
-			type: 'subscription',
 			event: 'init',
 			payload: [{ hello: 'world' }],
 		});
@@ -47,7 +41,6 @@ describe('subscriptions', () => {
 		});
 
 		expect(fn).toHaveBeenLastCalledWith({
-			type: 'subscription',
 			event: 'add',
 			payload: [{ hello: 'there' }],
 		});
@@ -56,12 +49,7 @@ describe('subscriptions', () => {
 	test('subscribe to a collection and ignore message', () => {
 		const fn = jest.fn();
 
-		sdk.subscribe(
-			{
-				collection: 'test',
-			},
-			fn
-		);
+		sdk.subscribe('test').all(fn);
 
 		expect(fn).not.toHaveBeenCalled();
 
@@ -74,7 +62,6 @@ describe('subscriptions', () => {
 		});
 
 		expect(fn).toHaveBeenLastCalledWith({
-			type: 'subscription',
 			event: 'init',
 			payload: [{ hello: 'world' }],
 		});
@@ -89,12 +76,7 @@ describe('subscriptions', () => {
 	test('unsubscribing', () => {
 		const fn = jest.fn();
 
-		const unsubscribe = sdk.subscribe(
-			{
-				collection: 'test',
-			},
-			fn
-		);
+		const unsubscribe = sdk.subscribe('test').all(fn);
 
 		expect(fn).not.toHaveBeenCalled();
 
@@ -107,7 +89,6 @@ describe('subscriptions', () => {
 		});
 
 		expect(fn).toHaveBeenLastCalledWith({
-			type: 'subscription',
 			event: 'init',
 			payload: [{ hello: 'world' }],
 		});
