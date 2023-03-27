@@ -91,7 +91,6 @@ export class DirectusWebSocket<T extends TypeMap, IAuthHandler extends IWebSocke
 		} else {
 			this._transport = new WebSocketTransport({
 				url: this.url,
-				mode: this._options?.transport?.mode ?? 'handshake',
 				...this._options?.transport,
 			});
 		}
