@@ -47,8 +47,8 @@
 	"license": "MIT",
 	"dependencies": {
 		"axios": "^0.27.2",
-		"mock-socket": "^9.2.1",
-		"websocket": "^1.0.34"
+		"isomorphic-ws": "^5.0.0",
+		"ws": "^8.13.0"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "22.0.2",

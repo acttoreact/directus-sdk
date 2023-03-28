@@ -1,6 +1,6 @@
 import { IWebSocketTransport, WebSocketTransportOptions } from '../transport';
 import { getUID } from './uid';
-import { w3cwebsocket as WebSocket } from 'websocket';
+import WebSocket from 'isomorphic-ws';
 
 /**
  * Transport implementation
@@ -32,11 +32,9 @@ export class WebSocketTransport extends IWebSocketTransport {
 			this.errorListeners.forEach((listener) => listener(err));
 		};
 
-		this.socket.onmessage = (event) => {
+		this.socket.onmessage = (event: any) => {
 			if (typeof event.data !== 'string') return;
 			const data = JSON.parse(event.data);
-
-			// console.log('onmessage', data)
 
 			if (data.type === 'ping') {
 				this.send({ type: 'pong' });
@@ -52,7 +50,7 @@ export class WebSocketTransport extends IWebSocketTransport {
 
 	send(data: Record<string, any>): string {
 		const uid = getUID();
-		// console.log('send', {...data, uid})
+
 		this.socket.send(JSON.stringify({ ...data, uid }));
 
 		return uid;
