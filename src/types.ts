@@ -361,3 +361,33 @@ export type RequiredKeys<T> = {
 export type OptionalKeys<T> = {
 	[K in keyof T]-?: Record<string, never> extends { [P in K]: T[K] } ? K : never;
 }[keyof T];
+
+export type Snapshot = {
+	version: number;
+	directus: string;
+	vendor?: 'mysql' | 'postgres' | 'cockroachdb' | 'sqlite' | 'oracle' | 'mssql' | 'redshift';
+	collections: CollectionType[];
+	fields: (FieldType & { meta: Omit<FieldMetaType, 'id'> })[];
+	relations: (RelationType & { meta: Omit<RelationMetaType, 'id'> })[];
+};
+
+export type SnapshotDiffWithHash = {
+	hash: string;
+	diff: {
+		collections: {
+			collection: string;
+			diff: Record<string, any>[];
+		}[];
+		fields: {
+			collection: string;
+			field: string;
+			diff: Record<string, any>[];
+		}[];
+		relations: {
+			collection: string;
+			field: string;
+			related_collection: string | null;
+			diff: Record<string, any>[];
+		}[];
+	};
+};

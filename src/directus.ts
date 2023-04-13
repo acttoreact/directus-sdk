@@ -11,6 +11,7 @@ import {
 	RelationsHandler,
 	RevisionsHandler,
 	RolesHandler,
+	SchemaHandler,
 	ServerHandler,
 	SettingsHandler,
 	UsersHandler,
@@ -45,6 +46,7 @@ export interface IDirectusBase {
 	readonly auth: IAuth;
 	readonly storage: IStorage;
 	readonly transport: ITransport;
+	readonly schema: SchemaHandler;
 	readonly server: ServerHandler;
 	readonly utils: UtilsHandler;
 	readonly graphql: GraphQLHandler;

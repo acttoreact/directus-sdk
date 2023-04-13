@@ -12,6 +12,7 @@ import {
 	RelationsHandler,
 	RevisionsHandler,
 	RolesHandler,
+	SchemaHandler,
 	ServerHandler,
 	SettingsHandler,
 	UsersHandler,
@@ -55,6 +56,7 @@ export class Directus<T extends TypeMap, IAuthHandler extends IAuth = Auth> impl
 	private _revisions?: RevisionsHandler<TypeOf<T, 'directus_revisions'>>;
 	private _roles?: RolesHandler<TypeOf<T, 'directus_roles'>>;
 	private _users?: UsersHandler<TypeOf<T, 'directus_users'>>;
+	private _schema?: SchemaHandler;
 	private _server?: ServerHandler;
 	private _utils?: UtilsHandler;
 	private _graphql?: GraphQLHandler;
@@ -197,6 +199,9 @@ export class Directus<T extends TypeMap, IAuthHandler extends IAuth = Auth> impl
 
 	get users(): UsersHandler<TypeOf<T, 'directus_users'>> {
 		return this._users || (this._users = new UsersHandler<TypeOf<T, 'directus_users'>>(this.transport));
+	}
+	get schema(): SchemaHandler {
+		return this._schema || (this._schema = new SchemaHandler(this.transport));
 	}
 	get settings(): SettingsHandler<TypeOf<T, 'directus_settings'>> {
 		return this._settings || (this._settings = new SettingsHandler<TypeOf<T, 'directus_settings'>>(this.transport));
