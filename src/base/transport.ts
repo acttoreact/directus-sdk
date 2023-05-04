@@ -79,7 +79,7 @@ export class Transport extends ITransport {
 				headers: options?.headers || {},
 				responseType: options?.responseType,
 				onUploadProgress: options?.onUploadProgress,
-				credentials: options?.credentials || 'include',
+				credentials: options?.credentials,
 			};
 
 			if (config.params) {
