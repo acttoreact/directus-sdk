@@ -7,6 +7,7 @@ module.exports = {
 	collectCoverageFrom: ['src/**/*.ts'],
 	testPathIgnorePatterns: ['dist'],
 	testMatch: ['<rootDir>/tests/**/*.test.ts'],
+	setupFilesAfterEnv: ['./jest.setup.js'],
 	testEnvironmentOptions: {
 		url: process.env.TEST_URL || 'http://localhost',
 	},

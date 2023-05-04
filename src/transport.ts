@@ -1,4 +1,3 @@
-import { AxiosRequestConfig, ResponseType } from 'axios';
 import { ItemMetadata } from './items';
 
 export type TransportErrorDescription = {
@@ -18,7 +17,7 @@ export type TransportResponse<T, R = any> = {
 	headers: any;
 };
 
-export type TransportMethods = 'get' | 'delete' | 'head' | 'options' | 'post' | 'put' | 'patch';
+export type TransportMethods = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'UPDATE' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
 export type TransportRequestOptions = {
 	params?: any;
@@ -27,11 +26,12 @@ export type TransportRequestOptions = {
 	onUploadProgress?: ((progressEvent: any) => void) | undefined;
 	maxBodyLength?: number;
 	maxContentLength?: number;
+	credentials?: RequestCredentials;
 };
 
 export type TransportOptions = TransportRequestOptions & {
 	url: string;
-	beforeRequest?: (config: AxiosRequestConfig) => Promise<AxiosRequestConfig>;
+	beforeRequest?: (config: RequestConfig) => Promise<RequestConfig>;
 };
 
 export abstract class ITransport {
@@ -83,3 +83,16 @@ export class TransportError<T = any, R = any> extends Error {
 		Object.setPrototypeOf(this, TransportError.prototype);
 	}
 }
+
+export type ResponseType = 'arraybuffer' | 'blob' | 'document' | 'json' | 'text' | 'stream';
+
+export type RequestConfig = {
+	url: string;
+	method: TransportMethods;
+	params?: Record<string, string>;
+	headers?: Record<string, string>;
+	body?: string;
+	responseType?: ResponseType;
+	credentials?: RequestCredentials;
+	onUploadProgress?: ((progressEvent: any) => void) | undefined;
+};
