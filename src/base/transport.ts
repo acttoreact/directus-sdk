@@ -25,11 +25,13 @@ function serializeSearchParams(obj: object, prefix = '', isArray = false): strin
 		if (obj.hasOwnProperty(p)) {
 			const k = prefix ? `${prefix}[${isArray ? '' : p}]` : p;
 			const v = obj[p as keyof typeof obj];
-			str.push(
-				v !== null && typeof v === 'object'
-					? serializeSearchParams(v, k, Array.isArray(v))
-					: encode(k) + '=' + encode(v)
-			);
+			if (v !== null && Array.isArray(v)) {
+				str.push(serializeSearchParams(v, k, Array.isArray(v)));
+			} else if (v !== null && typeof v === 'object') {
+				str.push(`${encode(k)}=${encodeURIComponent(JSON.stringify(v))}`);
+			} else {
+				str.push(`${encode(k)}=${encode(v)}`);
+			}
 		}
 	}
 	return str.join('&');
